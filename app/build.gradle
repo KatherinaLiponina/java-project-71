@@ -34,5 +34,5 @@ testing {
 
 application {
     // Define the main class for the application.
-    mainClass = 'app.App'
+    mainClass = 'hexlet.code.App'
 }
