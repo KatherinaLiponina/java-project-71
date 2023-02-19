@@ -1,4 +1,4 @@
-name: hello-world
+name: test-build
 
 on: push
 jobs:
@@ -9,4 +9,5 @@ jobs:
     steps: 
       
       - uses: actions/checkout@v2
+      - run: cd app
       - run: make build
