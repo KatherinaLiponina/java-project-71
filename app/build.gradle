@@ -40,3 +40,9 @@ application {
     // Define the main class for the application.
     mainClass = 'hexlet.code.App'
 }
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+    }
+}
