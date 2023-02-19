@@ -6,3 +6,7 @@ build
 
 #ignore visual studio code directory
 .vscode
+
+#Ignore test jsons
+file1.json
+file2.json
