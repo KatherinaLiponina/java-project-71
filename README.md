@@ -11,3 +11,4 @@
 <a href="https://codeclimate.com/github/KatherinaLiponina/java-project-71/test_coverage"><img src="https://api.codeclimate.com/v1/badges/55741dd36cd46043f0dc/test_coverage" /></a>
 
 https://asciinema.org/a/Pva8dxQYZFGxweTcQp5kAGMEk - step 5
+https://asciinema.org/a/w55OTfqm8SJzQNCDvwFhtWr2p - step 7

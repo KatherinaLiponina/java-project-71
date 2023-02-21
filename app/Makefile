@@ -7,3 +7,5 @@ all:
 	./gradlew clean build
 report:
 	./gradlew jacocoTestReport
+clean:
+	./gradlew clean
