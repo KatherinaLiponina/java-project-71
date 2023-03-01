@@ -1,5 +1,11 @@
 {
     "timeout": 20,
     "verbose": true,
-    "host": "hexlet.io"
+    "key1": "value1",
+    "follow": true,
+    "obj1": {
+        "nestedKey": "value",
+        "isNested": true
+    },
+    "believe": [1, 2, 3]
 }

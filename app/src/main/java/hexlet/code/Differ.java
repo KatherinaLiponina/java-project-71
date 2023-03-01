@@ -1,51 +1,65 @@
 package hexlet.code;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
 public class Differ {
-    public static String diff(Map<String, String> file1, Map<String, String> file2) {
-        StringBuilder diffString = new StringBuilder("{\n");
 
-        Map<String, String> file1Sorted = new TreeMap<>(file1);
-        Map<String, String> file2Sorted = new TreeMap<>(file2);
-        Set<Map.Entry<String, String>> file1set = file1Sorted.entrySet();
-        Set<Map.Entry<String, String>> file2set = file2Sorted.entrySet();
-        Iterator<Map.Entry<String, String>> iterator1 = file1set.iterator();
-        Iterator<Map.Entry<String, String>> iterator2 = file2set.iterator();
+    public static class Pair {
+        private String first;
+        private String second;
 
-        Map.Entry<String, String> entry1 = null;
-        Map.Entry<String, String> entry2 = null;
+        public String getFirst() {
+            return first;
+        }
+        public String getSecond() {
+            return second;
+        }
+        public Pair(String f, String s) {
+            first = f;
+            second = s;
+        }
+    }
+
+    public static Map<String, Pair> diff(Map<String, String> file1, Map<String, String> file2) throws Exception {
+        Iterator<Map.Entry<String, String>> iterator1 = normalize(file1);
+        Iterator<Map.Entry<String, String>> iterator2 = normalize(file2);
+
         boolean flag = iterator1.hasNext() || iterator2.hasNext();
+        Map.Entry<String, String> entry1 = nextEntry(iterator1);
+        Map.Entry<String, String> entry2 = nextEntry(iterator2);
+        Map<String, Pair> differ = new HashMap<>();
         while (flag) {
             flag = iterator1.hasNext() || iterator2.hasNext();
-
-            if (entry1 != null && entry2 != null
-                && entry1.getKey().equals(entry2.getKey())) {
-                if (entry1.getValue().equals(entry2.getValue())) {
-                    diffString.append("    " + entry1.getKey() + ": " + entry1.getValue() + "\n");
-                } else {
-                    diffString.append("  - " + entry1.getKey() + ": " + entry1.getValue() + "\n");
-                    diffString.append("  + " + entry2.getKey() + ": " + entry2.getValue() + "\n");
-                }
-                entry1 = iterator1.hasNext() ? iterator1.next() : null;
-                entry2 = iterator2.hasNext() ? iterator2.next() : null;
+            if (entry1 != null && entry2 != null && entry1.getKey().equals(entry2.getKey())) {
+                differ.put(entry1.getKey(), new Pair(entry1.getValue(), entry2.getValue()));
+                entry1 = nextEntry(iterator1);
+                entry2 = nextEntry(iterator2);
             } else if (entry1 != null && (entry2 == null || entry1.getKey().compareTo(entry2.getKey()) < 0)) {
-                diffString.append("  - " + entry1.getKey() + ": " + entry1.getValue() + "\n");
-                entry1 = iterator1.hasNext() ? iterator1.next() : null;
-            } else if (entry2 != null && (entry1 == null || entry1.getKey().compareTo(entry2.getKey()) > 0)) {
-                diffString.append("  + " + entry2.getKey() + ": " + entry2.getValue() + "\n");
-                entry2 = iterator2.hasNext() ? iterator2.next() : null;
+                differ.put(entry1.getKey(), new Pair(entry1.getValue(), ""));
+                entry1 = nextEntry(iterator1);
+            } else if (entry2 != null) {
+                differ.put(entry2.getKey(), new Pair("", entry2.getValue()));
+                entry2 = nextEntry(iterator2);
             } else {
-                entry1 = iterator1.hasNext() ? iterator1.next() : null;
-                entry2 = iterator2.hasNext() ? iterator2.next() : null;
+                throw new Exception("Something went really wrong");
             }
-
         }
-        diffString.append("}");
-
-        return diffString.toString();
+        return differ;
     }
+
+    private static Map.Entry<String, String> nextEntry(Iterator<Map.Entry<String, String>> it) {
+        return it.hasNext() ? it.next() : null;
+    }
+
+    private static Iterator<Map.Entry<String, String>> normalize(Map<String, String> file) {
+        Map<String, String> fileSorted = new TreeMap<>(file);
+        Set<Map.Entry<String, String>> fileset = fileSorted.entrySet();
+        Iterator<Map.Entry<String, String>> iterator = fileset.iterator();
+        return iterator;
+    }
+
 }

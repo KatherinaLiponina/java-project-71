@@ -8,6 +8,7 @@ import picocli.CommandLine.Option;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 @Command(name = "gendiff", mixinStandardHelpOptions = true, version = "gendiff 1.0",
@@ -32,18 +33,25 @@ public class App implements Callable<Integer> {
         String file1 = Files.readString(path1);
         String file2 = Files.readString(path2);
 
-        String result;
-        if (format.equals("json")) {
-            result = Differ.diff(Parser.jsonFileMapper(file1), Parser.jsonFileMapper(file2));
-        } else if (format.equals("yaml")) {
-            result = Differ.diff(Parser.yamlFileMapper(file1), Parser.yamlFileMapper(file2));
-        } else {
-            throw new Exception("Unrecognized format");
-        }
-
+        String result = Formatter.stylishFormatter(Differ.diff(preParsing(filepath1, file1),
+            preParsing(filepath2, file2)));
         System.out.println(result);
 
         return 0;
+    }
+
+    Map<String, String> preParsing(String filepath, String filedata) throws Exception {
+        Map<String, String> mappa;
+        String fileFormat = filepath.substring(filepath.length() - ".json".length());
+        if (fileFormat.equals(".json")) {
+            mappa = Parser.jsonFileMapper(filedata);
+        } else if (fileFormat.equals(".yaml")) {
+            mappa = Parser.yamlFileMapper(filedata);
+        } else {
+            mappa = null;
+            throw new Exception("Unrecognized format");
+        }
+        return mappa;
     }
 
     public static void main(String[] args) {
