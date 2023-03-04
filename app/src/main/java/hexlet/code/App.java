@@ -46,7 +46,7 @@ public class App implements Callable<Integer> {
         if (fileFormat.equals(".json")) {
             mappa = Parser.jsonFileMapper(filedata);
         } else if (fileFormat.equals(".yaml")) {
-            mappa = Parser.yamlFileMapper(filedata);
+            mappa = Parser.yamlFileMapper(filepath);
         } else {
             mappa = null;
             throw new Exception("Unrecognized format");

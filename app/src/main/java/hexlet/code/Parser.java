@@ -1,13 +1,16 @@
 package hexlet.code;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonToken;
+
+import org.yaml.snakeyaml.Yaml;
 
 public class Parser {
     public static Map<String, String> jsonFileMapper(String fileData) throws Exception {
@@ -43,10 +46,30 @@ public class Parser {
         return mapFile;
     }
 
-    public static Map<String, String> yamlFileMapper(String fileData) throws Exception {
-        YAMLMapper mapper = new YAMLMapper();
-        Map<String, String> mapFile = mapper.readValue(fileData,
-            new TypeReference<Map<String, String>>() { });
-        return mapFile;
+    public static Map<String, String> yamlFileMapper(String filepath) throws Exception {
+        InputStream inputStream = new FileInputStream(new File(filepath));
+        Yaml yaml = new Yaml();
+        Map<String, Object> data = yaml.load(inputStream);
+        Map<String, String> mappa = new HashMap<>();
+        for (Map.Entry<String, Object> entry : data.entrySet()) {
+            if (entry.getValue() == null) {
+                mappa.put(entry.getKey(), "null");
+            } else if (entry.getValue().toString().charAt(1) == '{') {
+                mappa.put(entry.getKey(), rebracket(entry.getValue().toString()));
+            } else {
+                mappa.put(entry.getKey(), entry.getValue().toString());
+            }
+        }
+        return mappa;
+    }
+
+    private static String rebracket(String str) {
+        StringBuilder s = new StringBuilder("{");
+        str = str.substring(1, str.length() - 1);
+        String[] settings = str.split(",");
+        for (String setting : settings) {
+            s.append(setting.trim().substring(1, setting.length() - 1) + ", ");
+        }
+        return s.toString().substring(0, s.length() - ", ".length());
     }
 }

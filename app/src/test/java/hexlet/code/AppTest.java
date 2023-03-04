@@ -13,8 +13,6 @@ public class AppTest {
     String file2;
     String file3;
     String file4;
-    String file1YAML;
-    String file2YAML;
 
     @BeforeEach
     public void init() throws Exception {
@@ -22,14 +20,10 @@ public class AppTest {
         final Path path2 = Paths.get("src/test/resources/testfile2.json");
         final Path path3 = Paths.get("src/test/resources/testfile3.json");
         final Path path4 = Paths.get("src/test/resources/testfile4.json");
-        final Path path1Y = Paths.get("src/test/resources/testfile1.yaml");
-        final Path path2Y = Paths.get("src/test/resources/testfile2.yaml");
         file1 = Files.readString(path1);
         file2 = Files.readString(path2);
         file3 = Files.readString(path3);
         file4 = Files.readString(path4);
-        file1YAML = Files.readString(path1Y);
-        file2YAML = Files.readString(path2Y);
     }
 
     @Test
@@ -72,10 +66,13 @@ public class AppTest {
 
     @Test
     public void testYAML() throws Exception {
-        assertEquals("{\n  - follow: false\n    host: hexlet.io\n  - proxy: 123.234.53.22\n"
-            + "  - timeout: 50\n  + timeout: 20\n  + verbose: true\n}",
-            Formatter.stylishFormatter(Differ.diff(Parser.yamlFileMapper(file1YAML),
-            Parser.yamlFileMapper(file2YAML))));
+        assertEquals("{\n    chars1: [a, b, c]\n  - chars2: [d, e, f]\n  + chars2: false\n  - checked: false\n"
+            + "  + checked: true\n  - default: null\n  + default: [value1, value2]\n  - id: 45\n  + id: null\n"
+            + "  - key1: value1\n  + key2: value2\n    numbers1: [1, 2, 3, 4]\n  - numbers2: [2, 3, 4, 5]\n"
+            + "  + numbers2: [22, 33, 44, 55]\n  - numbers3: [3, 4, 5]\n  + numbers4: [4, 5, 6]\n"
+            + "  + obj1: {nestedKey=value, isNested=true}\n  - setting1: Some value\n  + setting1: Another value\n"
+            + "  - setting2: 200\n  + setting2: 300\n  - setting3: true\n  + setting3: none\n}",
+            Formatter.stylishFormatter(Differ.diff(Parser.yamlFileMapper("src/test/resources/testfile1.yaml"),
+            Parser.yamlFileMapper("src/test/resources/testfile2.yaml"))));
     }
-
 }
