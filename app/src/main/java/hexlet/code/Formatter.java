@@ -4,24 +4,19 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import hexlet.code.Differ.Pair;
+import hexlet.code.formatters.Stylish;
+import hexlet.code.formatters.Plain;
 
 public class Formatter {
-    public static String stylishFormatter(Map<String, Pair> mappa) {
-        Map<String, Pair> mappaSorted = new TreeMap<>(mappa);
-        StringBuilder str = new StringBuilder("{\n");
-        for (Map.Entry<String, Pair> entry : mappaSorted.entrySet()) {
-            if (entry.getValue().getFirst().equals(entry.getValue().getSecond())) {
-                str.append("    " + entry.getKey() + ": " + entry.getValue().getFirst() + "\n");
-            } else {
-                if (!entry.getValue().getFirst().equals("")) {
-                    str.append("  - " + entry.getKey() + ": " + entry.getValue().getFirst() + "\n");
-                }
-                if (!entry.getValue().getSecond().equals("")) {
-                    str.append("  + " + entry.getKey() + ": " + entry.getValue().getSecond() + "\n");
-                }
-            }
+
+    public static String callFormatter(Map<String, Pair> differ, String format) throws Exception {
+        differ = new TreeMap<>(differ);
+        if (format.equals("stylish")) {
+            return Stylish.formatStylish(differ);
+        } else if (format.equals("plain")) {
+            return Plain.formatPlain(differ);
+        } else {
+            throw new Exception("Unrecognized printing format");
         }
-        str.append("}");
-        return str.toString();
     }
 }

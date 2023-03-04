@@ -33,14 +33,14 @@ public class App implements Callable<Integer> {
         String file1 = Files.readString(path1);
         String file2 = Files.readString(path2);
 
-        String result = Formatter.stylishFormatter(Differ.diff(preParsing(filepath1, file1),
-            preParsing(filepath2, file2)));
+        String result = Formatter.callFormatter(Differ.diff(callParser(filepath1, file1),
+            callParser(filepath2, file2)), format);
         System.out.println(result);
 
         return 0;
     }
 
-    Map<String, String> preParsing(String filepath, String filedata) throws Exception {
+    Map<String, String> callParser(String filepath, String filedata) throws Exception {
         Map<String, String> mappa;
         String fileFormat = filepath.substring(filepath.length() - ".json".length());
         if (fileFormat.equals(".json")) {
@@ -49,7 +49,7 @@ public class App implements Callable<Integer> {
             mappa = Parser.yamlFileMapper(filepath);
         } else {
             mappa = null;
-            throw new Exception("Unrecognized format");
+            throw new Exception("Unrecognized file format");
         }
         return mappa;
     }

@@ -31,14 +31,27 @@ public class AppTest {
         assertEquals("{\n  - believe: [1, 2, 4]\n  + believe: [1, 2, 3]\n  - follow: false\n  + follow: true\n"
             + "  - ip: 123.234.53.22\n  - key1: value2\n  + key1: value1\n  - obj1: {nestedKey=value, isNested=false}\n"
             + "  + obj1: {nestedKey=value, isNested=true}\n  - time: 50\n  + timeout: 20\n  + verbose: true\n}",
-            Formatter.stylishFormatter(Differ.diff(Parser.jsonFileMapper(file1), Parser.jsonFileMapper(file2))));
+            Formatter.callFormatter(Differ.diff(Parser.jsonFileMapper(file1), Parser.jsonFileMapper(file2)),
+            "stylish"));
+    }
+
+    @Test
+    public void test12plain() throws Exception {
+        assertEquals("Property 'believe' was updated. From [complex value] to [complex value]\nProperty 'follow' was"
+            + " updated. From false to true\nProperty 'ip'  was removed\nProperty 'key1' was updated. From 'value2' "
+            + "to 'value1'\nProperty 'obj1' was updated. From [complex value] to [complex value]\nProperty 'time'  "
+            + "was removed\nProperty 'timeout' was added with value: 20\n"
+            + "Property 'verbose' was added with value: true",
+            Formatter.callFormatter(Differ.diff(Parser.jsonFileMapper(file1), Parser.jsonFileMapper(file2)),
+            "plain"));
     }
 
     @Test
     public void test13() throws Exception {
         assertEquals("{\n  - believe: [1, 2, 4]\n  - follow: false\n"
             + "  - ip: 123.234.53.22\n  - key1: value2\n  - obj1: {nestedKey=value, isNested=false}\n  - time: 50\n}",
-            Formatter.stylishFormatter(Differ.diff(Parser.jsonFileMapper(file1), Parser.jsonFileMapper(file3))));
+            Formatter.callFormatter(Differ.diff(Parser.jsonFileMapper(file1), Parser.jsonFileMapper(file3)),
+            "stylish"));
     }
 
     @Test
@@ -46,7 +59,8 @@ public class AppTest {
         assertEquals("{\n  - believe: [1, 2, 4]\n  + believe: [1, 2, 3]\n  - follow: false\n  + follow: true\n"
             + "  + key1: value1\n    obj1: {nestedKey=value, isNested=true}\n  - proxy: 123.234.53.22\n"
             + "  + timeout: 20\n  + verbose: true\n}",
-            Formatter.stylishFormatter(Differ.diff(Parser.jsonFileMapper(file4), Parser.jsonFileMapper(file2))));
+            Formatter.callFormatter(Differ.diff(Parser.jsonFileMapper(file4), Parser.jsonFileMapper(file2)),
+            "stylish"));
     }
 
     @Test
@@ -54,14 +68,16 @@ public class AppTest {
         assertEquals("{\n    believe: [1, 2, 4]\n    follow: false\n  - ip: 123.234.53.22\n  - key1: value2\n"
             + "  - obj1: {nestedKey=value, isNested=false}\n  + obj1: {nestedKey=value, isNested=true}\n"
             + "  + proxy: 123.234.53.22\n}",
-            Formatter.stylishFormatter(Differ.diff(Parser.jsonFileMapper(file1), Parser.jsonFileMapper(file4))));
+            Formatter.callFormatter(Differ.diff(Parser.jsonFileMapper(file1), Parser.jsonFileMapper(file4)),
+            "stylish"));
     }
 
     @Test
     public void test11() throws Exception {
         assertEquals("{\n    believe: [1, 2, 4]\n    follow: false\n    ip: 123.234.53.22\n"
             + "    key1: value2\n    obj1: {nestedKey=value, isNested=false}\n    time: 50\n}",
-            Formatter.stylishFormatter(Differ.diff(Parser.jsonFileMapper(file1), Parser.jsonFileMapper(file1))));
+            Formatter.callFormatter(Differ.diff(Parser.jsonFileMapper(file1), Parser.jsonFileMapper(file1)),
+            "stylish"));
     }
 
     @Test
@@ -72,7 +88,8 @@ public class AppTest {
             + "  + numbers2: [22, 33, 44, 55]\n  - numbers3: [3, 4, 5]\n  + numbers4: [4, 5, 6]\n"
             + "  + obj1: {nestedKey=value, isNested=true}\n  - setting1: Some value\n  + setting1: Another value\n"
             + "  - setting2: 200\n  + setting2: 300\n  - setting3: true\n  + setting3: none\n}",
-            Formatter.stylishFormatter(Differ.diff(Parser.yamlFileMapper("src/test/resources/testfile1.yaml"),
-            Parser.yamlFileMapper("src/test/resources/testfile2.yaml"))));
+            Formatter.callFormatter(Differ.diff(Parser.yamlFileMapper("src/test/resources/testfile1.yaml"),
+            Parser.yamlFileMapper("src/test/resources/testfile2.yaml")),
+            "stylish"));
     }
 }
