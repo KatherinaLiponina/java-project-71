@@ -12,3 +12,4 @@
 
 https://asciinema.org/a/Pva8dxQYZFGxweTcQp5kAGMEk - step 5
 https://asciinema.org/a/w55OTfqm8SJzQNCDvwFhtWr2p - step 7
+https://asciinema.org/connect/33f4f31e-1e71-4fee-9dcf-797574f1eea7 - step 8s
