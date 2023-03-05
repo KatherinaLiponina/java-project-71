@@ -38,8 +38,8 @@ public class AppTest {
     @Test
     public void test12plain() throws Exception {
         assertEquals("Property 'believe' was updated. From [complex value] to [complex value]\nProperty 'follow' was"
-            + " updated. From false to true\nProperty 'ip'  was removed\nProperty 'key1' was updated. From 'value2' "
-            + "to 'value1'\nProperty 'obj1' was updated. From [complex value] to [complex value]\nProperty 'time'  "
+            + " updated. From false to true\nProperty 'ip' was removed\nProperty 'key1' was updated. From 'value2' "
+            + "to 'value1'\nProperty 'obj1' was updated. From [complex value] to [complex value]\nProperty 'time' "
             + "was removed\nProperty 'timeout' was added with value: 20\n"
             + "Property 'verbose' was added with value: true",
             Formatter.callFormatter(Differ.diff(Parser.mapJsonFile(file1), Parser.mapJsonFile(file2)),

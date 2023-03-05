@@ -19,7 +19,7 @@ public class Plain {
             } else if (!entry.getValue().getSecond().equals("")) {
                 str.append("' was added with value: " + checkValue(entry.getValue().getSecond()) + "\n");
             } else {
-                str.append("'  was removed\n");
+                str.append("' was removed\n");
             }
         }
         if (str.length() == 0) {
