@@ -8,7 +8,7 @@ import java.util.TreeMap;
 
 public class Differ {
 
-    public static class Pair {
+    public static final class Pair {
         private String first;
         private String second;
 

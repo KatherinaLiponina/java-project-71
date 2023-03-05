@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class AppTest {
-    String file1;
-    String file2;
-    String file3;
-    String file4;
+public final class AppTest {
+    private String file1;
+    private String file2;
+    private String file3;
+    private String file4;
 
     @BeforeEach
     public void init() throws Exception {
