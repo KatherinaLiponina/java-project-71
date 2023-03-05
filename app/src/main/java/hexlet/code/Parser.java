@@ -22,28 +22,34 @@ public class Parser {
             String value = "";
             JsonToken token = jsonParser.nextToken();
             if (token == JsonToken.START_ARRAY) {
-                value = "[";
-                while (jsonParser.nextToken() != JsonToken.END_ARRAY) {
-                    value += jsonParser.getText() + ", ";
-                }
-                value = value.substring(0, value.length() - ", ".length());
-                value += "]";
+                value = parseArray(jsonParser);
             } else if (token == JsonToken.START_OBJECT) {
-                value = "{";
-                while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
-                    String key = jsonParser.getCurrentName();
-                    jsonParser.nextToken();
-                    String val = jsonParser.getText();
-                    value += key + "=" + val + ", ";
-                }
-                value = value.substring(0, value.length() - ", ".length());
-                value += "}";
+                value = parseObject(jsonParser);
             } else {
                 value = jsonParser.getText();
             }
             mapFile.put(name, value);
         }
         return mapFile;
+    }
+
+    private static String parseObject(JsonParser jsonParser) throws Exception {
+        StringBuilder value = new StringBuilder("{");
+        while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
+            String key = jsonParser.getCurrentName();
+            jsonParser.nextToken();
+            String val = jsonParser.getText();
+            value.append(key + "=" + val + ", ");
+        }
+        return value.toString().substring(0, value.toString().length() - ", ".length()) + "}";
+    }
+
+    private static String parseArray(JsonParser jsonParser) throws Exception {
+        StringBuilder value = new StringBuilder("[");
+        while (jsonParser.nextToken() != JsonToken.END_ARRAY) {
+            value.append(jsonParser.getText() + ", ");
+        }
+        return value.toString().substring(0, value.toString().length() - ", ".length()) + "]";
     }
 
     public static Map<String, String> mapYamlFile(String filepath) throws Exception {

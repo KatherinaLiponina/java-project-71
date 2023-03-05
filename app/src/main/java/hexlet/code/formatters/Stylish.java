@@ -13,13 +13,13 @@ public class Stylish {
         for (Map.Entry<String, Pair> entry : mappa.entrySet()) {
             if (entry.getValue().getFirst().equals(entry.getValue().getSecond())) {
                 str.append(makeVerdict(entry, unchanged));
-            } else {
-                if (!entry.getValue().getFirst().equals("")) {
-                    str.append(makeVerdict(entry, removed));
-                }
-                if (!entry.getValue().getSecond().equals("")) {
-                    str.append(makeVerdict(entry, added));
-                }
+                continue;
+            }
+            if (!entry.getValue().getFirst().equals("")) {
+                str.append(makeVerdict(entry, removed));
+            }
+            if (!entry.getValue().getSecond().equals("")) {
+                str.append(makeVerdict(entry, added));
             }
         }
         str.append("}");
