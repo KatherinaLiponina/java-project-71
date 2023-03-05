@@ -42,11 +42,10 @@ public class App implements Callable<Integer> {
 
     Map<String, String> callParser(String filepath, String filedata) throws Exception {
         Map<String, String> mappa;
-        String fileFormat = filepath.substring(filepath.length() - ".json".length());
-        if (fileFormat.equals(".json")) {
-            mappa = Parser.jsonFileMapper(filedata);
-        } else if (fileFormat.equals(".yaml")) {
-            mappa = Parser.yamlFileMapper(filepath);
+        if (filepath.substring(filepath.length() - ".json".length()).equals(".json")) {
+            mappa = Parser.mapJsonFile(filedata);
+        } else if (filepath.substring(filepath.length() - ".yml".length()).equals(".yml")) {
+            mappa = Parser.mapYamlFile(filepath);
         } else {
             mappa = null;
             throw new Exception("Unrecognized file format");

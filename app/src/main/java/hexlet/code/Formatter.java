@@ -5,6 +5,7 @@ import java.util.TreeMap;
 
 import hexlet.code.Differ.Pair;
 import hexlet.code.formatters.Stylish;
+import hexlet.code.formatters.Json;
 import hexlet.code.formatters.Plain;
 
 public class Formatter {
@@ -15,6 +16,8 @@ public class Formatter {
             return Stylish.formatStylish(differ);
         } else if (format.equals("plain")) {
             return Plain.formatPlain(differ);
+        } else if (format.equals("json")) {
+            return Json.formatJson(differ);
         } else {
             throw new Exception("Unrecognized printing format");
         }

@@ -13,7 +13,7 @@ import com.fasterxml.jackson.core.JsonToken;
 import org.yaml.snakeyaml.Yaml;
 
 public class Parser {
-    public static Map<String, String> jsonFileMapper(String fileData) throws Exception {
+    public static Map<String, String> mapJsonFile(String fileData) throws Exception {
         JsonParser jsonParser = new JsonFactory().createParser(fileData);
         Map<String, String> mapFile = new HashMap<>();
         jsonParser.nextToken(); //for {
@@ -46,7 +46,7 @@ public class Parser {
         return mapFile;
     }
 
-    public static Map<String, String> yamlFileMapper(String filepath) throws Exception {
+    public static Map<String, String> mapYamlFile(String filepath) throws Exception {
         InputStream inputStream = new FileInputStream(new File(filepath));
         Yaml yaml = new Yaml();
         Map<String, Object> data = yaml.load(inputStream);
