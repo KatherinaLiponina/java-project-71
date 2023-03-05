@@ -2,11 +2,15 @@ package hexlet.code.formatters;
 
 import java.util.Map;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import hexlet.code.Differ.Pair;
 
 public class Json {
     public static String formatJson(Map<String, Pair> mappa) throws Exception {
-        StringBuilder str = new StringBuilder("{\n");
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(mappa);
+        /*StringBuilder str = new StringBuilder("{\n");
         for (Map.Entry<String, Pair> entry : mappa.entrySet()) {
             str.append("  \"" + entry.getKey() + "\": {\n    ");
             if (entry.getValue().getFirst().equals("")) {
@@ -18,6 +22,6 @@ public class Json {
                     + ",\n    \"new value\": " + entry.getValue().getSecond() + "\n  }\n");
             }
         }
-        return str.append("}").toString();
+        return str.append("}").toString();*/
     }
 }
