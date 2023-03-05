@@ -99,4 +99,22 @@ public final class AppTest {
             Parser.mapYamlFile("src/test/resources/testfile1.yml"),
             Parser.mapYamlFile("src/test/resources/testfile1.yml")), "plain"));
     }
+
+    @Test
+    public void testYamlToJson() throws Exception {
+        assertEquals(Files.readString(Paths.get("src/test/resources/answerfile1.json")),
+            Differ.generate("src/test/resources/testfile1.yml", "src/test/resources/testfile1.yml", "json") + "\n");
+    }
+
+    @Test
+    public void testJsonToJson() throws Exception {
+        assertEquals(Files.readString(Paths.get("src/test/resources/answerfile2.json")),
+            Differ.generate("src/test/resources/testfile1.json", "src/test/resources/testfile2.json", "json") + "\n");
+    }
+
+    @Test
+    public void testJsonAndYaml() throws Exception {
+        assertEquals(Files.readString(Paths.get("src/test/resources/answerfile3")),
+            Differ.generate("src/test/resources/testfile1.json", "src/test/resources/testfile2.yml") + "\n\n");
+    }
 }
