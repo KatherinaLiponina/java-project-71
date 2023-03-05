@@ -3,6 +3,8 @@ package hexlet.code;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,6 +15,20 @@ import com.fasterxml.jackson.core.JsonToken;
 import org.yaml.snakeyaml.Yaml;
 
 public class Parser {
+
+    public static Map<String, String> callParser(String filepath) throws Exception {
+        Map<String, String> mappa;
+        if (filepath.substring(filepath.length() - ".json".length()).equals(".json")) {
+            mappa = Parser.mapJsonFile(Files.readString(Paths.get(filepath)));
+        } else if (filepath.substring(filepath.length() - ".yml".length()).equals(".yml")) {
+            mappa = Parser.mapYamlFile(filepath);
+        } else {
+            mappa = null;
+            throw new Exception("Unrecognized file format");
+        }
+        return mappa;
+    }
+
     public static Map<String, String> mapJsonFile(String fileData) throws Exception {
         JsonParser jsonParser = new JsonFactory().createParser(fileData);
         Map<String, String> mapFile = new HashMap<>();

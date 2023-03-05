@@ -8,7 +8,6 @@ import picocli.CommandLine.Option;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Map;
 import java.util.concurrent.Callable;
 
 @Command(name = "gendiff", mixinStandardHelpOptions = true, version = "gendiff 1.0",
@@ -30,29 +29,13 @@ public class App implements Callable<Integer> {
         } else if (!Files.exists(path2)) {
             System.out.println("File 2 does not exist!");
         }
-        String file1 = Files.readString(path1);
-        String file2 = Files.readString(path2);
 
-        String result = Formatter.callFormatter(Differ.diff(callParser(filepath1, file1),
-            callParser(filepath2, file2)), format);
+        String result = Differ.generate(filepath1, filepath2, format);
         if (!result.equals("")) {
             System.out.println(result);
         }
 
         return 0;
-    }
-
-    Map<String, String> callParser(String filepath, String filedata) throws Exception {
-        Map<String, String> mappa;
-        if (filepath.substring(filepath.length() - ".json".length()).equals(".json")) {
-            mappa = Parser.mapJsonFile(filedata);
-        } else if (filepath.substring(filepath.length() - ".yml".length()).equals(".yml")) {
-            mappa = Parser.mapYamlFile(filepath);
-        } else {
-            mappa = null;
-            throw new Exception("Unrecognized file format");
-        }
-        return mappa;
     }
 
     public static void main(String[] args) {

@@ -24,6 +24,11 @@ public class Differ {
         }
     }
 
+    public static String generate(String filepath1, String filepath2, String format) throws Exception {
+        return Formatter.callFormatter(Differ.diff(Parser.callParser(filepath1),
+        Parser.callParser(filepath2)), format);
+    }
+
     public static Map<String, Pair> diff(Map<String, String> file1, Map<String, String> file2) throws Exception {
         Iterator<Map.Entry<String, String>> iterator1 = normalize(file1);
         Iterator<Map.Entry<String, String>> iterator2 = normalize(file2);
