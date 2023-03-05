@@ -24,6 +24,10 @@ public class Differ {
         }
     }
 
+    public static String generate(String filepath1, String filepath2) throws Exception {
+        return generate(filepath1, filepath2, "stylish");
+    }
+
     public static String generate(String filepath1, String filepath2, String format) throws Exception {
         return Formatter.callFormatter(Differ.diff(Parser.callParser(filepath1),
         Parser.callParser(filepath2)), format);
