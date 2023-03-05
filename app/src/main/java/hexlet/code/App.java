@@ -35,7 +35,9 @@ public class App implements Callable<Integer> {
 
         String result = Formatter.callFormatter(Differ.diff(callParser(filepath1, file1),
             callParser(filepath2, file2)), format);
-        System.out.println(result);
+        if (!result.equals("")) {
+            System.out.println(result);
+        }
 
         return 0;
     }

@@ -22,6 +22,9 @@ public class Plain {
                 str.append("'  was removed\n");
             }
         }
+        if (str.length() == 0) {
+            return "";
+        }
         return str.toString().substring(0, str.length() - 1);
     }
 

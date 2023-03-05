@@ -14,6 +14,8 @@ plugins {
     id 'jacoco'
 }
 
+group 'hexlet.code'
+
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()

@@ -92,4 +92,11 @@ public class AppTest {
             Parser.mapYamlFile("src/test/resources/testfile2.yml")),
             "stylish"));
     }
+
+    @Test
+    public void testYamlSamePlain() throws Exception {
+        assertEquals("", Formatter.callFormatter(Differ.diff(
+            Parser.mapYamlFile("src/test/resources/testfile1.yml"),
+            Parser.mapYamlFile("src/test/resources/testfile1.yml")), "plain"));
+    }
 }
